@@ -1,4 +1,4 @@
-var mongoose = require("mongoose");
+const mongoose = require('../../../services/mongoose.service').mongoose;
 var logger = require("../../../config/logger");
 var User = mongoose.model("User");
 

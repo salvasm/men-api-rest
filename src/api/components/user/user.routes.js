@@ -1,14 +1,12 @@
-var express = require('express'),
-    mongoose = require('mongoose');
+const router = require('express').Router();
+const mongoose = require('mongoose');
 
 // Import Models
-var User = require('./model.js');
+var User = require('./user.model.js');
 var userModel = mongoose.model('User');
 
 // Import Controllers
-var UserCtrl = require('./controller.js');
-
-var router = express.Router();
+var UserCtrl = require('./user.controller.js');
 
 router.route('/user').get(UserCtrl.findAllUsers);
 router.route('/user').post(UserCtrl.addUser);
