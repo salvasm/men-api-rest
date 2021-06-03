@@ -1,6 +1,7 @@
 const mongoose = require('../../../services/mongoose.service').mongoose;
 const logger = require('../../../config/logger');
 const config = require('../../../config/global');
+const bcrypt = require('bcrypt');
 const User = mongoose.model("User");
 
 //GET - Return all users
@@ -39,6 +40,7 @@ exports.addUser = function (req, res) {
         email: req.body.email,
         firstname: req.body.firstname,
         lastname: req.body.lastname,
+        password: bcrypt.hashSync(req.body.password, config.saltRounds),
         gender: req.body.gender,
         birthday: req.body.birthday,
         createdAt: req.body.createdAt,
@@ -59,7 +61,7 @@ exports.updateUser = function (req, res) {
         user.email = req.body.email ? req.body.email : user.email;
         user.firstname = req.body.firstname ? req.body.firstname : user.firstname;
         user.lastname = req.body.lastname ? req.body.lastname : user.lastname;
-        user.isPartner = req.body.isPartner;
+        user.password = req.body.password ? bcrypt.hashSync(req.body.password, config.saltRounds) : user.password;
         user.gender = req.body.gender ? req.body.gender : user.gender;
         user.birthday = req.body.birthday ? req.body.birthday : user.birthday;
         user.createdAt = req.body.createdAt ? req.body.createdAt : user.createdAt;
