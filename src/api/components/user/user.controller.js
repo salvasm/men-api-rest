@@ -1,11 +1,14 @@
-const mongoose = require('../../../services/mongoose.service').mongoose;
+const mongoose = require('../../../services/mongoose').mongoose;
 const logger = require('../../../config/logger');
 const config = require('../../../config/global');
 const bcrypt = require('bcrypt');
+
+// Import Model
+require('./user.model');
 const User = mongoose.model("User");
 
 //GET - Return all users
-exports.findAllUsers = function (req, res) {
+var findAllUsers = function (req, res) {
     User.find(function (err, user) {
         if (err) {
             res.status(500).send(err.message);
@@ -16,7 +19,7 @@ exports.findAllUsers = function (req, res) {
 };
 
 //GET - Return a User with specified ID
-exports.findById = function (req, res) {
+var findById = function (req, res) {
     User.findById(req.params.id, function (err, user) {
         if (err) {
             return res.status(500).jsonp({
@@ -34,7 +37,7 @@ exports.findById = function (req, res) {
 };
 
 //POST - Insert a new User
-exports.addUser = function (req, res) {
+var addUser = function (req, res) {
     var user = new User({
         username: req.body.username,
         email: req.body.email,
@@ -55,17 +58,16 @@ exports.addUser = function (req, res) {
 };
 
 //PUT - Update a register already exists
-exports.updateUser = function (req, res) {
+var updateUserAllParams = function (req, res) {
     User.findById(req.params.id, function (err, user) {
-        user.username = req.body.username ? req.body.username : user.username;
-        user.email = req.body.email ? req.body.email : user.email;
-        user.firstname = req.body.firstname ? req.body.firstname : user.firstname;
-        user.lastname = req.body.lastname ? req.body.lastname : user.lastname;
-        user.password = req.body.password ? bcrypt.hashSync(req.body.password, config.saltRounds) : user.password;
-        user.gender = req.body.gender ? req.body.gender : user.gender;
-        user.birthday = req.body.birthday ? req.body.birthday : user.birthday;
-        user.createdAt = req.body.createdAt ? req.body.createdAt : user.createdAt;
-        user.modifiedAt = req.body.modifiedAt ? req.body.modifiedAt : user.modifiedAt;
+        user.username = req.body.username;
+        user.email = req.body.email;
+        user.firstname = req.body.firstname;
+        user.lastname = req.body.lastname;
+        user.password = bcrypt.hashSync(req.body.password, config.saltRounds);
+        user.gender = req.body.gender;
+        user.birthday = req.body.birthday;
+        user.modifiedAt = req.body.modifiedAt;
 
         user.save(function (err) {
             if (err) return res.send(500, err.message);
@@ -75,8 +77,28 @@ exports.updateUser = function (req, res) {
     });
 };
 
+//PATCH - Update param from a register already exists
+var updateUserParam = function (req, res) {
+    User.findById(req.params.id, function (err, user) {
+        user.username = req.body.username ? req.body.username : user.username;
+        user.email = req.body.email ? req.body.email : user.email;
+        user.firstname = req.body.firstname ? req.body.firstname : user.firstname;
+        user.lastname = req.body.lastname ? req.body.lastname : user.lastname;
+        user.password = req.body.password ? bcrypt.hashSync(req.body.password, config.saltRounds) : user.password;
+        user.gender = req.body.gender ? req.body.gender : user.gender;
+        user.birthday = req.body.birthday ? req.body.birthday : user.birthday;
+        user.modifiedAt = req.body.modifiedAt ? req.body.modifiedAt : user.modifiedAt;
+
+        user.save(function (err) {
+            if (err) return res.send(500, err.message);
+            logger.info("PATCH /user");
+            res.status(200).jsonp(user);
+        });
+    });
+};
+
 //DELETE - Delete a User with specified ID
-exports.deleteUser = function (req, res) {
+var deleteUser = function (req, res) {
     User.findById(req.params.id, function (err, user) {
         if (user) {
             user.remove(function (err) {
@@ -91,3 +113,12 @@ exports.deleteUser = function (req, res) {
         }
     });
 };
+
+module.exports = {
+    findAllUsers: findAllUsers,
+    findById: findById,
+    addUser: addUser,
+    updateUserAllParams: updateUserAllParams,
+    updateUserParam: updateUserParam,
+    deleteUser: deleteUser
+}

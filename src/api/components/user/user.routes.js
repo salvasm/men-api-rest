@@ -1,18 +1,23 @@
 const router = require('express').Router();
-const mongoose = require('mongoose');
-
-// Import Models
-var User = require('./user.model.js');
-var userModel = mongoose.model('User');
 
 // Import Controllers
-var UserCtrl = require('./user.controller.js');
+var UserCtrl = require('./user.controller');
 
-router.route('/user').get(UserCtrl.findAllUsers);
-router.route('/user').post(UserCtrl.addUser);
+/**
+ * CRUD Routes:
+ * GET      /api/user/
+ * POST     /api/user/
+ * GET      /api/user/{id}
+ * PUT      /api/user/{id}
+ * PATCH    /api/user/{id}
+ * DELETE   /api/user/{id}
+ */
+router.route('/').get(UserCtrl.findAllUsers);
+router.route('/').post(UserCtrl.addUser);
 
-router.route('/user/:id').get(UserCtrl.findById);
-router.route('/user/:id').put(UserCtrl.updateUser);
-router.route('/user/:id').delete(UserCtrl.deleteUser);
+router.route('/:id').get(UserCtrl.findById);
+router.route('/:id').put(UserCtrl.updateUserAllParams);
+router.route('/:id').patch(UserCtrl.updateUserParam);
+router.route('/:id').delete(UserCtrl.deleteUser);
 
 module.exports = router;

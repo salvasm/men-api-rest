@@ -7,7 +7,7 @@ router.get('/', (req, res) => {
 
 // All component routes
 var userRoutes = require('./components/user/user.routes');
-router.use('/', userRoutes);
+router.use('/user', userRoutes);
 
 // Handle undefined Routes
 router.use('*', (req, res) => {
