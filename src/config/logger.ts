@@ -1,11 +1,11 @@
-const { createLogger, format, transports } = require('winston');
+import { createLogger, format, transports } from 'winston';
 const { combine, timestamp, label, prettyPrint, printf } = format;
 
 const myFormat = printf(({ level, message, label, timestamp }) => {
     return `${timestamp} ${level}\t${message}`;
 });
 
-var config = {
+let config = {
     format: combine(
         timestamp(),
         format.colorize(),
@@ -21,6 +21,6 @@ var config = {
     ]
 };
 
-var logger = createLogger(config);
+let logger = createLogger(config);
 
-module.exports = logger;
+export default logger;

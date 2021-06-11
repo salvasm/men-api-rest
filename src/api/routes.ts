@@ -1,7 +1,7 @@
 const router = require('express').Router();
 
 // Root API path
-router.get('/', (req, res) => {
+router.get('/', (req: any, res: any) => {
     res.send('Welcome to Node.js API REST');
 });
 
@@ -10,7 +10,7 @@ var userRoutes = require('./components/user/user.routes');
 router.use('/user', userRoutes);
 
 // Handle undefined Routes
-router.use('*', (req, res) => {
+router.use('*', (req: any, res: any) => {
     res.status(404);
     res.send('Page not found');
 });

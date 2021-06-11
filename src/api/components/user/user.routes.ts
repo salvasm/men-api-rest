@@ -1,5 +1,5 @@
-const router = require('express').Router();
-
+import * as express from 'express';
+let router = express.Router();
 // Import Controllers
 var UserCtrl = require('./user.controller');
 
