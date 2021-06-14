@@ -1,3 +1,5 @@
+import { Request, Response } from 'express';
+import httpErrorHandler from '../../../services/errorHandler';
 import mongoose from 'mongoose';
 import logger from '../../../config/logger';
 import config from '../../../config/global';
@@ -8,25 +10,18 @@ require('./user.model');
 const User = mongoose.model("User");
 
 //GET - Return all users
-var findAllUsers = function (req:any, res:any) {
-    User.find(function (err:any, user:any) {
-        if (err) {
-            res.status(500).send(err.message);
-        }
+var findAllUsers = function (req: Request, res: Response) {
+    User.find(function (err: any, user: any) {
+        if (err) return httpErrorHandler(err, res);
         logger.info("GET /user");
         res.status(200).jsonp(user);
     });
 };
 
 //GET - Return a User with specified ID
-var findById = function (req:any, res:any) {
-    User.findById(req.params.id, function (err:any, user:any) {
-        if (err) {
-            return res.status(500).jsonp({
-                success: false,
-                message: err
-            });
-        }
+var findById = function (req: Request, res: Response) {
+    User.findById(req.params.id, function (err: any, user: any) {
+        if (err) return httpErrorHandler(err, res);
         if (user) {
             logger.info("GET /user/" + req.params.id);
             res.status(200).jsonp(user);
@@ -37,7 +32,7 @@ var findById = function (req:any, res:any) {
 };
 
 //POST - Insert a new User
-var addUser = function (req:any, res:any) {
+var addUser = function (req: Request, res: Response) {
     var user = new User({
         username: req.body.username,
         email: req.body.email,
@@ -50,16 +45,16 @@ var addUser = function (req:any, res:any) {
         modifiedAt: req.body.modifiedAt,
     });
 
-    user.save(function (err:any, user:any) {
-        if (err) return res.status(500).send(err.message);
+    user.save(function (err: any, user: any) {
+        if (err) return httpErrorHandler(err, res);
         logger.info("POST /user");
         res.status(201).jsonp(user);
     });
 };
 
 //PUT - Update a register already exists
-var updateUserAllParams = function (req:any, res:any) {
-    User.findById(req.params.id, function (err:any, user:any) {
+var updateUserAllParams = function (req: Request, res: Response) {
+    User.findById(req.params.id, function (err: any, user: any) {
         user.username = req.body.username;
         user.email = req.body.email;
         user.firstname = req.body.firstname;
@@ -69,8 +64,8 @@ var updateUserAllParams = function (req:any, res:any) {
         user.birthday = req.body.birthday;
         user.modifiedAt = req.body.modifiedAt;
 
-        user.save(function (err:any) {
-            if (err) return res.send(500, err.message);
+        user.save(function (err: any) {
+            if (err) return httpErrorHandler(err, res);
             logger.info("PUT /user");
             res.status(200).jsonp(user);
         });
@@ -78,8 +73,8 @@ var updateUserAllParams = function (req:any, res:any) {
 };
 
 //PATCH - Update param from a register already exists
-var updateUserParam = function (req:any, res:any) {
-    User.findById(req.params.id, function (err:any, user:any) {
+var updateUserParam = function (req: Request, res: Response) {
+    User.findById(req.params.id, function (err: any, user: any) {
         user.username = req.body.username ? req.body.username : user.username;
         user.email = req.body.email ? req.body.email : user.email;
         user.firstname = req.body.firstname ? req.body.firstname : user.firstname;
@@ -89,8 +84,8 @@ var updateUserParam = function (req:any, res:any) {
         user.birthday = req.body.birthday ? req.body.birthday : user.birthday;
         user.modifiedAt = req.body.modifiedAt ? req.body.modifiedAt : user.modifiedAt;
 
-        user.save(function (err:any) {
-            if (err) return res.send(500, err.message);
+        user.save(function (err: any) {
+            if (err) return httpErrorHandler(err, res);
             logger.info("PATCH /user");
             res.status(200).jsonp(user);
         });
@@ -98,13 +93,11 @@ var updateUserParam = function (req:any, res:any) {
 };
 
 //DELETE - Delete a User with specified ID
-var deleteUser = function (req:any, res:any) {
-    User.findById(req.params.id, function (err: any, user:any) {
+var deleteUser = function (req: Request, res: Response) {
+    User.findById(req.params.id, function (err: any, user: any) {
         if (user) {
             user.remove(function (err: any) {
-                if (err) {
-                    return res.send(500, err.message);
-                }
+                if (err) return httpErrorHandler(err, res);
                 logger.info("DELETE /user");
                 res.status(200).send('User ' + user.id + ' was deleted');
             });
