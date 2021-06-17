@@ -1,7 +1,7 @@
 import { Response, Request } from 'express';
 import mongoose from 'mongoose';
 import { Interface } from 'readline';
-import httpErrorHandler from '../../services/errorHandler';
+import httpErrorHandler from '@services/errorHandler';
 
 class CRUD {
     private name: string;

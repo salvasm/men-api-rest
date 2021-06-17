@@ -1,9 +1,9 @@
 import { Request, Response } from 'express';
 import mongoose from 'mongoose';
-import logger from '../../../config/logger';
-import config from '../../../config/global';
+import logger from '@config/logger';
+import config from '@config/global';
+import CRUD from '@components/crud'
 import bcrypt from 'bcrypt';
-import CRUD from '../crud';
 
 // Create CRUD
 const userCrud = new CRUD('User');

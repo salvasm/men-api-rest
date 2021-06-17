@@ -1,9 +1,9 @@
 //const jwt = require('express-jwt');
 const jwt = require('express-jwt');
-const config = require('../../config/global');
+import config from "@config/global";
 
 function auth() {
-    const { secret } = config;
+    const secret = config.jwt.secret;
 
     return jwt({ secret, algorithms: ['HS256'] }).unless({
         path: [

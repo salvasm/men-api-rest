@@ -1,8 +1,8 @@
 import express from 'express';
-import config from '../config/global';
-import logger from '../config/logger';
+import config from '@config/global';
+import logger from '@config/logger';
 import methodOverride from 'method-override';
-import { connect } from '../services/database';
+import { connect } from '@services/database';
 
 class App {
     public app: express.Application;
@@ -37,7 +37,7 @@ class App {
         this.app.listen(this.port, () => {
             logger.info('Server running:\tSUCCESS\t Port: ' + this.port);
         });
-      }
+    }
 }
 
 export default App;
