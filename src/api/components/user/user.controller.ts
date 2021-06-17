@@ -1,38 +1,24 @@
 import { Request, Response } from 'express';
-import httpErrorHandler from '../../../services/errorHandler';
 import mongoose from 'mongoose';
 import logger from '../../../config/logger';
 import config from '../../../config/global';
 import bcrypt from 'bcrypt';
+import CRUD from '../crud';
+
+// Create CRUD
+const userCrud = new CRUD('User');
 
 // Import Model
-require('./user.model');
 const User = mongoose.model("User");
 
 //GET - Return all users
-var findAllUsers = function (req: Request, res: Response) {
-    User.find(function (err: any, user: any) {
-        if (err) return httpErrorHandler(err, res);
-        logger.info("GET /user");
-        res.status(200).jsonp(user);
-    });
-};
-
-//GET - Return a User with specified ID
-var findById = function (req: Request, res: Response) {
-    User.findById(req.params.id, function (err: any, user: any) {
-        if (err) return httpErrorHandler(err, res);
-        if (user) {
-            logger.info("GET /user/" + req.params.id);
-            res.status(200).jsonp(user);
-        } else {
-            res.status(200).send('User not found');
-        }
-    });
+var findAll = function (req: Request, res: Response) {
+    logger.info("GET /user/");
+    userCrud.findAll(req, res);
 };
 
 //POST - Insert a new User
-var addUser = function (req: Request, res: Response) {
+var create = function (req: Request, res: Response) {
     var user = new User({
         username: req.body.username,
         email: req.body.email,
@@ -44,74 +30,42 @@ var addUser = function (req: Request, res: Response) {
         createdAt: req.body.createdAt,
         modifiedAt: req.body.modifiedAt,
     });
+    
+    logger.info("POST /user");
+    userCrud.create(req, res, user);
+};
 
-    user.save(function (err: any, user: any) {
-        if (err) return httpErrorHandler(err, res);
-        logger.info("POST /user");
-        res.status(201).jsonp(user);
-    });
+//GET - Return a User with specified ID
+var read = function (req: Request, res: Response) {
+    logger.info("GET /user/" + req.params.id);
+    userCrud.findById(req, res);
 };
 
 //PUT - Update a register already exists
-var updateUserAllParams = function (req: Request, res: Response) {
-    User.findById(req.params.id, function (err: any, user: any) {
-        user.username = req.body.username;
-        user.email = req.body.email;
-        user.firstname = req.body.firstname;
-        user.lastname = req.body.lastname;
-        user.password = bcrypt.hashSync(req.body.password, config.bcrypt.saltRounds);
-        user.gender = req.body.gender;
-        user.birthday = req.body.birthday;
-        user.modifiedAt = req.body.modifiedAt;
-
-        user.save(function (err: any) {
-            if (err) return httpErrorHandler(err, res);
-            logger.info("PUT /user");
-            res.status(200).jsonp(user);
-        });
-    });
-};
-
-//PATCH - Update param from a register already exists
-var updateUserParam = function (req: Request, res: Response) {
-    User.findById(req.params.id, function (err: any, user: any) {
-        user.username = req.body.username ? req.body.username : user.username;
-        user.email = req.body.email ? req.body.email : user.email;
-        user.firstname = req.body.firstname ? req.body.firstname : user.firstname;
-        user.lastname = req.body.lastname ? req.body.lastname : user.lastname;
-        user.password = req.body.password ? bcrypt.hashSync(req.body.password, config.bcrypt.saltRounds) : user.password;
-        user.gender = req.body.gender ? req.body.gender : user.gender;
-        user.birthday = req.body.birthday ? req.body.birthday : user.birthday;
-        user.modifiedAt = req.body.modifiedAt ? req.body.modifiedAt : user.modifiedAt;
-
-        user.save(function (err: any) {
-            if (err) return httpErrorHandler(err, res);
-            logger.info("PATCH /user");
-            res.status(200).jsonp(user);
-        });
-    });
+var update = function (req: Request, res: Response) {
+    var update = {
+        username: req.body.username,
+        email: req.body.email,
+        firstname: req.body.firstname,
+        lastname: req.body.lastname,
+        password: bcrypt.hashSync(req.body.password, config.bcrypt.saltRounds),
+        gender: req.body.gender,
+        birthday: req.body.birthday
+    }
+    logger.info("PUT /user");
+    userCrud.update(req, res, update);
 };
 
 //DELETE - Delete a User with specified ID
-var deleteUser = function (req: Request, res: Response) {
-    User.findById(req.params.id, function (err: any, user: any) {
-        if (user) {
-            user.remove(function (err: any) {
-                if (err) return httpErrorHandler(err, res);
-                logger.info("DELETE /user");
-                res.status(200).send('User ' + user.id + ' was deleted');
-            });
-        } else {
-            res.status(200).send('User not found');
-        }
-    });
+var deleteOne = function (req: Request, res: Response) {
+    logger.info("DELETE /user");
+    userCrud.delete(req, res);
 };
 
 module.exports = {
-    findAllUsers: findAllUsers,
-    findById: findById,
-    addUser: addUser,
-    updateUserAllParams: updateUserAllParams,
-    updateUserParam: updateUserParam,
-    deleteUser: deleteUser
+    findAll: findAll,
+    create: create,
+    read: read,
+    update: update,
+    delete: deleteOne
 }

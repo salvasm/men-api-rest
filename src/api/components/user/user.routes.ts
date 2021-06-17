@@ -9,15 +9,13 @@ var UserCtrl = require('./user.controller');
  * POST     /api/user/
  * GET      /api/user/{id}
  * PUT      /api/user/{id}
- * PATCH    /api/user/{id}
  * DELETE   /api/user/{id}
  */
-router.route('/').get(UserCtrl.findAllUsers);
-router.route('/').post(UserCtrl.addUser);
+router.route('/').get(UserCtrl.findAll);
+router.route('/').post(UserCtrl.create);
 
-router.route('/:id').get(UserCtrl.findById);
-router.route('/:id').put(UserCtrl.updateUserAllParams);
-router.route('/:id').patch(UserCtrl.updateUserParam);
-router.route('/:id').delete(UserCtrl.deleteUser);
+router.route('/:id').get(UserCtrl.read);
+router.route('/:id').put(UserCtrl.update);
+router.route('/:id').delete(UserCtrl.delete);
 
 module.exports = router;
