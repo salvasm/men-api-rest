@@ -2,9 +2,12 @@ import mongoose from 'mongoose';
 import logger from '../config/logger';
 
 interface dbData {
+    type: string;
     port?: Number;
     host: string;
     name: string;
+    user?: string;
+    pass?: string;
 }
 
 const options = {
@@ -15,10 +18,12 @@ const options = {
 
 // Connection to DB
 export function connect(dbData: dbData) {
-    var port = dbData.port ? ':' + dbData.port : 27017;
-    var uri = 'mongodb://' + dbData.host + ':' + port + '/' + dbData.name;
+    var dbUser = dbData.user && dbData.pass ? dbData.user + ':' + dbData.pass + '@' : '';
+    var dbPort = dbData.port ? dbData.port : undefined;
+    var dbHost = dbPort ? dbData.host + ':' + dbPort : dbData.host;
+    var uri = dbData.type + '://' + dbUser + dbHost + '/' + dbData.name;
     mongoose.connect(uri, options).then(() => {
-        logger.info('Database:\tSUCCESS\t Port: ' + port);
+        logger.info('Database:\tSUCCESS\t Port: ' + dbPort);
     }).catch(error => {
         logger.error('Database:\tFAIL\n' + error);
     })

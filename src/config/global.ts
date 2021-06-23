@@ -1,11 +1,12 @@
 const config = {
     server: {
-        port: 3000,
+        port: 3030,
         host: 'localhost'
     },
     db: {
+        type: 'mongodb',
         host: 'localhost',
-        name: 'user',
+        name: 'demo',
     },
     bcrypt: {
         saltRounds: 10,
