@@ -1,26 +1,19 @@
 import { Response, Request } from 'express';
 import mongoose from 'mongoose';
-import { Interface } from 'readline';
 import httpErrorHandler from '@services/errorHandler';
 
 class CRUD {
     private name: string;
-    private model: any;
-    private dto: Interface;
+    public model: any;
 
     constructor(name: string) {
         this.name = name;
         this.model = this.initModel(name.toLowerCase());
-        this.dto = this.initDto(name.toLowerCase());
     }
 
     private initModel(name: string) {
         require('./' + name + '/' + name + '.model');
         return mongoose.model(this.name);
-    }
-
-    private initDto(name: string) {
-        return require('./' + name + '/' + name + '.dto');
     }
 
     public create(req: Request, res: Response, item: any) {

@@ -1,7 +1,18 @@
-import mongoose from 'mongoose';
-var Schema = mongoose.Schema;
+import mongoose, { Schema } from 'mongoose';
 
-var userSchema = new Schema({
+export interface IUser {
+    username: string,
+    email: string,
+    firstname: string,
+    lastname: string,
+    password: string,
+    gender?: string,
+    birthday?: Date,
+    createdAt?: Date,
+    modifiedAt?: Date,
+}
+
+const userSchema = new Schema({
     username: {
         type: String,
         required: true,
@@ -39,4 +50,4 @@ var userSchema = new Schema({
     }
 });
 
-module.exports = mongoose.model('User', userSchema);
+export default mongoose.model<IUser>('User', userSchema);

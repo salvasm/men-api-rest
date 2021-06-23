@@ -1,15 +1,10 @@
 import { Request, Response } from 'express';
-import mongoose from 'mongoose';
 import logger from '@config/logger';
-import config from '@config/global';
 import CRUD from '@components/crud'
-import bcrypt from 'bcrypt';
+import UserDto from './user.dto';
 
 // Create CRUD
 const userCrud = new CRUD('User');
-
-// Import Model
-const User = mongoose.model("User");
 
 //GET - Return all users
 var findAll = function (req: Request, res: Response) {
@@ -19,20 +14,9 @@ var findAll = function (req: Request, res: Response) {
 
 //POST - Insert a new User
 var create = function (req: Request, res: Response) {
-    var user = new User({
-        username: req.body.username,
-        email: req.body.email,
-        firstname: req.body.firstname,
-        lastname: req.body.lastname,
-        password: bcrypt.hashSync(req.body.password, config.bcrypt.saltRounds),
-        gender: req.body.gender,
-        birthday: req.body.birthday,
-        createdAt: req.body.createdAt,
-        modifiedAt: req.body.modifiedAt,
-    });
-    
     logger.info("POST /user");
-    userCrud.create(req, res, user);
+    var user = new UserDto(req.body);
+    userCrud.create(req, res, userCrud.model(user));
 };
 
 //GET - Return a User with specified ID
@@ -43,17 +27,9 @@ var read = function (req: Request, res: Response) {
 
 //PUT - Update a register already exists
 var update = function (req: Request, res: Response) {
-    var update = {
-        username: req.body.username,
-        email: req.body.email,
-        firstname: req.body.firstname,
-        lastname: req.body.lastname,
-        password: bcrypt.hashSync(req.body.password, config.bcrypt.saltRounds),
-        gender: req.body.gender,
-        birthday: req.body.birthday
-    }
     logger.info("PUT /user");
-    userCrud.update(req, res, update);
+    var user = new UserDto(req.body);
+    userCrud.update(req, res, userCrud.model(user));
 };
 
 //DELETE - Delete a User with specified ID
