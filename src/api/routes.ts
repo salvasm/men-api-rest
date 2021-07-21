@@ -6,6 +6,8 @@ router.get('/', (req: any, res: any) => {
 });
 
 // All component routes
+var authRoutes = require('./components/auth/auth.routes');
+router.use('/auth', authRoutes);
 var userRoutes = require('./components/user/user.routes');
 router.use('/user', userRoutes);
 

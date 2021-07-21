@@ -1,8 +1,11 @@
 import express from 'express';
 import config from '@config/global';
 import logger from '@config/logger';
+import jwt from '@middlewares/jwt';
 import methodOverride from 'method-override';
 import { connect } from '@services/database';
+// import errorMiddleware from './middleware/error';
+// import HttpException from './exceptions/HttpException';
 
 class App {
     public app: express.Application;
@@ -21,7 +24,7 @@ class App {
         this.app.use(express.urlencoded({ extended: false }));
         this.app.use(express.json());
         this.app.use(methodOverride());
-        //this.app.use(jwt());
+        this.app.use(jwt());
     }
 
     private initializeControllers() {
