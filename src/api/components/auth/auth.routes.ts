@@ -5,10 +5,8 @@ var AuthCtrl = require('./auth.controller');
 
 /**
  * CRUD Routes:
- * POST     /api/auth/signin
  * POST     /api/auth/login
  */
-router.route('/signin').post(AuthCtrl.signin);
-router.route('/login').post(AuthCtrl.login);
+router.route('/login').post(AuthCtrl.authentication);
 
 module.exports = router;
