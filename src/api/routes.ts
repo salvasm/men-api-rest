@@ -14,7 +14,10 @@ router.use('/user', userRoutes);
 // Handle undefined Routes
 router.use('*', (req: any, res: any) => {
     res.status(404);
-    res.send('Page not found');
+    res.send({
+        error: '404',
+        message: 'Page was not found'
+    });
 });
 
 module.exports = router;
