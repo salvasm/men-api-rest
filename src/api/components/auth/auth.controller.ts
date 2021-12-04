@@ -25,7 +25,7 @@ var authentication = function (req: Request, res: Response) {
                 message: 'Wrong username or password'
             })
         }
-    });
+    }).select('password');
 };
 
 module.exports = {
