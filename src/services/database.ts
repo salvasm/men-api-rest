@@ -1,14 +1,6 @@
 import mongoose from 'mongoose';
 import logger from '@config/logger';
-
-interface dbData {
-    type: string;
-    port?: Number;
-    host: string;
-    name: string;
-    user?: string;
-    pass?: string;
-}
+import { dbData } from 'interfaces/global';
 
 const options = {
     useNewUrlParser: true,

@@ -1,12 +1,15 @@
 import { Response } from 'express';
-
-interface error extends Error {
-    status: number
-}
+import { error } from '../interfaces/global'
+import mongoErrors from './mongoErrorHandler'
 
 function httpErrorHandler(error: error, res: Response) {
     var status = error.status || 500;
     var message = error.message || 'Something went wrong';
+    
+    // Manage Mongo errors
+    if(error.name === 'ValidationError') return mongoErrors.handleValidationError(error, res);
+    if(error.code && error.code === 11000) return mongoErrors.duplicatedKeyError(error, res);
+
     res.status(status);
     res.json({
         success: false,
