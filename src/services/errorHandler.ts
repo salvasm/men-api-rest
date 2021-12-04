@@ -10,6 +10,7 @@ function httpErrorHandler(error: error, res: Response) {
     res.status(status);
     res.json({
         success: false,
+        status: status,
         message: message
     });
 }
