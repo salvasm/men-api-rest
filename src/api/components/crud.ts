@@ -64,7 +64,7 @@ class CRUD {
                     return res.status(200).json({
                         success: true,
                         message: result._id + ' was updated',
-                        result: item
+                        fields: item
                     });
                 } else {
                     return res.status(200).json({

@@ -22,13 +22,17 @@ const mongoErrors = {
 	  if (errors.length > 1) {
 		const formattedErrors = errors.join("");
 		res.status(status).send({
-		  messages: formattedErrors,
-		  fields: fields,
+            success: false,
+            status: status,
+            message: formattedErrors,
+            fields: fields,
 		});
 	  } else {
 		res.status(status).send({
-		  messages: errors,
-		  fields: fields,
+            success: false,
+            status: status,
+            message: errors,
+            fields: fields,
 		});
 	  }
 	}
