@@ -17,11 +17,13 @@ class CRUD {
     }
 
     public create(req: Request, res: Response, item: any) {
+        let _ = this;
         item.save(function (err: any, result: any) {
             if (err) return httpErrorHandler(err, res);
             res.status(201).json({
                 success: true,
-                result: result
+                message: _.name + ' was created',
+                result: result._id,
             });
         });
     }
@@ -48,7 +50,7 @@ class CRUD {
             } else {
                 return res.status(200).json({
                     success: false,
-                    message: _.name + ' not found'
+                    message: _.name + ' was not found'
                 });
             }
         });
@@ -63,20 +65,21 @@ class CRUD {
                 if (result) {
                     return res.status(200).json({
                         success: true,
-                        message: result._id + ' was updated',
+                        message: _.name + ' data was updated',
+                        result: result._id,
                         fields: item
                     });
                 } else {
                     return res.status(200).json({
                         success: false,
-                        message: _.name + ' not updated'
+                        message: _.name + ' was not updated'
                     });
                 }
             });
         } else {
             return res.status(200).json({
                 success: false,
-                message: 'Fields to update have not been sent'
+                message: _.name + ' was not updated. No fields to update has been sent'
             });
         }
     }
@@ -88,12 +91,13 @@ class CRUD {
             if (result) {
                 return res.status(200).json({
                     success: true,
+                    message: _.name + ' was deleted',
                     result: result._id
                 });
             } else {
                 return res.status(200).json({
                     success: false,
-                    message: _.name + ' not deleted'
+                    message: _.name + ' was not deleted'
                 });
             }
         });
