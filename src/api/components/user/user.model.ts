@@ -7,9 +7,7 @@ export interface IUser {
     lastname: string,
     password: string,
     gender?: string,
-    birthday?: Date,
-    createdAt?: Date,
-    modifiedAt?: Date,
+    birthday?: Date
 }
 
 const userSchema = new Schema({
@@ -41,14 +39,12 @@ const userSchema = new Schema({
     birthday: {
         type: Date
     },
-    createdAt: {
-        type: Date,
-        default: Date.now()
-    },
-    modifiedAt: {
-        type: Date,
-        default: Date.now()
+    role: {
+        type: String,
+        default: 'user',
+        enum: ['admin', 'user', 'guest'],
+        immutable: true
     }
-});
+}, { timestamps: true });
 
 export default mongoose.model<IUser>('User', userSchema);

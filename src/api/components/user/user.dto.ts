@@ -10,19 +10,17 @@ class User implements IUser {
     password!: string;
     gender?: string | undefined;
     birthday?: Date | undefined;
-    createdAt?: Date | undefined;
-    modifiedAt?: Date | undefined;
+    length: number;
 
     constructor(data: IUser) {
-        this.username = data.username;
-        this.email = data.email;
-        this.firstname = data.firstname;
-        this.lastname = data.lastname;
-        this.password = bcrypt.hashSync(data.password, config.bcrypt.saltRounds);
-        this.gender = data.gender;
-        this.birthday = data.birthday;
-        this.createdAt = data.createdAt;
-        this.modifiedAt = data.modifiedAt;
+        if (data.username) this.username = data.username;
+        if (data.email) this.email = data.email;
+        if (data.firstname) this.firstname = data.firstname;
+        if (data.lastname) this.lastname = data.lastname;
+        if (data.password) this.password = bcrypt.hashSync(data.password, config.bcrypt.saltRounds);
+        if (data.gender) this.gender = data.gender;
+        if (data.birthday) this.birthday = data.birthday;
+        this.length = Object.keys(data).length;
     }
 
     public getUsername() {
@@ -62,7 +60,7 @@ class User implements IUser {
     }
 
     public setPassword(value: string) {
-        this.password = value;
+        this.password = bcrypt.hashSync(value, config.bcrypt.saltRounds);;
     }
 
     public getGender() {
@@ -79,22 +77,6 @@ class User implements IUser {
 
     public setBirthday(value: Date) {
         this.birthday = value;
-    }
-
-    public getCreatedAt() {
-        return this.createdAt;
-    }
-
-    public setCreatedAt(value: Date) {
-        this.createdAt = value;
-    }
-
-    public getModifiedAt() {
-        return this.modifiedAt;
-    }
-
-    public setModifiedAt(value: Date) {
-        this.modifiedAt = value;
     }
 }
 

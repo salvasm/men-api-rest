@@ -29,7 +29,7 @@ var read = function (req: Request, res: Response) {
 var update = function (req: Request, res: Response) {
     logger.info("PUT /user");
     var user = new UserDto(req.body);
-    userCrud.update(req, res, userCrud.model(user));
+    userCrud.update(req, res, user);
 };
 
 //DELETE - Delete a User with specified ID

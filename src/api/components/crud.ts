@@ -57,20 +57,28 @@ class CRUD {
 
     public update(req: Request, res: Response, item: any) {
         let _ = this;
-        this.model.findOneAndUpdate(req.params.id, item, (err: any, result: any) => {
-            if (err) return httpErrorHandler(err, res);
-            if (result) {
-                return res.status(200).json({
-                    success: true,
-                    result: result
-                });
-            } else {
-                return res.status(200).json({
-                    success: false,
-                    message: _.name + ' not updated'
-                });
-            }
-        });
+        if (item.length) {
+            this.model.findOneAndUpdate(req.params.id, {$set: item}, (err: any, result: any) => {
+                if (err) return httpErrorHandler(err, res);
+                if (result) {
+                    return res.status(200).json({
+                        success: true,
+                        message: result._id + ' was updated',
+                        result: item
+                    });
+                } else {
+                    return res.status(200).json({
+                        success: false,
+                        message: _.name + ' not updated'
+                    });
+                }
+            });
+        } else {
+            return res.status(200).json({
+                success: false,
+                message: 'Fields to update have not been sent'
+            });
+        }
     }
 
     public delete(req: Request, res: Response) {
@@ -80,7 +88,7 @@ class CRUD {
             if (result) {
                 return res.status(200).json({
                     success: true,
-                    result: result
+                    result: result._id
                 });
             } else {
                 return res.status(200).json({
