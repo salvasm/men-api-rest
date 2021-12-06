@@ -2,7 +2,7 @@ import { createLogger, format, transports } from 'winston';
 const { combine, timestamp, label, prettyPrint, printf } = format;
 
 const myFormat = printf(({ level, message, label, timestamp }) => {
-    return `${timestamp} ${level}\t${message}`;
+    return `${timestamp} ${level} \t${message}`;
 });
 
 let config = {

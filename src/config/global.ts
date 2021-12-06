@@ -6,7 +6,10 @@ const config = {
     db: {
         type: 'mongodb',
         host: 'localhost',
+        port: undefined,
         name: 'demo',
+        user: undefined,
+        pass: undefined
     },
     bcrypt: {
         saltRounds: 10,

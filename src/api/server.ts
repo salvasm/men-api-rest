@@ -16,7 +16,7 @@ class App {
 
         this.initializeMiddlewares();
         this.initializeControllers();
-        this.connectDatabase();
+        this.initializeDatabase();
     }
 
     private initializeMiddlewares() {
@@ -32,14 +32,19 @@ class App {
         this.app.use('/api', apiRoutes);
     }
 
-    private connectDatabase() {
+    private initializeDatabase() {
         connect(config.db);
     }
 
     public listen() {
-        this.app.listen(this.port, () => {
-            logger.info('Server running:\tSUCCESS\t Port: ' + this.port);
-        });
+        logger.info('INITIAL CONNECTIONS');
+        try {
+            this.app.listen(this.port, () => {
+                logger.info('Server:\tDONE \t Port: ' + this.port);
+            });
+        } catch (error) {
+            logger.error('Server:\tFAIL\t Something went wrong');
+        }
     }
 }
 
