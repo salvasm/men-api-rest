@@ -13,3 +13,10 @@ export interface dbData {
     user?: string;
     pass?: string;
 }
+
+declare module 'express-session' {
+    export interface SessionData {
+        username: { [key: string]: any };
+        role: { [key: string]: any };
+    }
+}
