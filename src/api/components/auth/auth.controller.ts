@@ -11,8 +11,9 @@ var authentication = function (req: Request, res: Response) {
     userModel.findOne({username: req.body.user}, function (err: any, result: any) {
         if (result && bcrypt.compareSync(req.body.password, result.password)) {
             const payload = {
-                user: req.body.user,
-                admin: false
+                id: result.id,
+                username: req.body.user,
+                role: result.role
             }
             const token = jwt.sign(payload, config.jwt.secret);
             res.json({
@@ -25,7 +26,7 @@ var authentication = function (req: Request, res: Response) {
                 message: 'Wrong username or password'
             })
         }
-    }).select('password');
+    }).select({ 'password': 1, 'role':1 });
 };
 
 module.exports = {

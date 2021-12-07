@@ -1,14 +1,28 @@
-import jwt from 'express-jwt';
+import jwt from 'jsonwebtoken';
 import config from "@config/global";
+import { NextFunction, Request, Response } from 'express';
 
-function authJwt() {
-    const options = {
-        secret: config.jwt.secret,
-        algorithms: ['HS256']
-    };
-    const paths = ['/api/auth/login'];
-
-    return jwt(options).unless({ path: paths });
+function skipRoute(currentUrl: string) {
+    return config.jwt.allowed.includes(currentUrl);
 }
 
-export default authJwt;
+function authJWT(request: Request, response: Response, next: NextFunction) {
+    if (!skipRoute(request.originalUrl)) {
+        const authHeader = request.headers.authorization;
+        if (authHeader) {
+            const token = authHeader.split(' ')[1];
+            
+            if (jwt.verify(token, config.jwt.secret)) {
+                next();
+            } else {
+                response.sendStatus(401);
+            }
+        } else {
+            response.sendStatus(401);
+        }
+    } else {
+        next();
+    }
+}
+
+export default authJWT;

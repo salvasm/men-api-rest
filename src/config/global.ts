@@ -15,7 +15,9 @@ const config = {
         saltRounds: 10,
     },
     jwt: {
-        secret: 'JWT_SECRET_KEY'
+        secret: 'JWT_SECRET_KEY',
+        expiration: '1800s',
+        allowed: ['/api/auth/login']
     }
 };
 
