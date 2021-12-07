@@ -5,6 +5,7 @@ import jwt from '@middlewares/jwt';
 import methodOverride from 'method-override';
 import { connect } from '@services/database';
 import errorMiddleware from './middleware/error';
+import session from 'express-session';
 
 class App {
     public app: express.Application;
@@ -23,8 +24,9 @@ class App {
         this.app.use(express.urlencoded({ extended: false }));
         this.app.use(express.json());
         this.app.use(methodOverride());
-        this.app.use(jwt());
         this.app.use(errorMiddleware);
+        this.app.use(jwt);
+        this.app.use(session(config.session));
     }
 
     private initializeControllers() {

@@ -18,6 +18,11 @@ const config = {
         secret: 'JWT_SECRET_KEY',
         expiration: '1800s',
         allowed: ['/api/auth/login']
+    },
+    session: {
+        secret: 'SESSION_SECRET_KEY',
+        resave: true,
+        saveUninitialized: true
     }
 };
 
