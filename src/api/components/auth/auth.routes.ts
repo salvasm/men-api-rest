@@ -8,5 +8,6 @@ var AuthCtrl = require('./auth.controller');
  * POST     /api/auth/login
  */
 router.route('/login').post(AuthCtrl.authentication);
+router.route('/logout').post(AuthCtrl.logout);
 
 module.exports = router;

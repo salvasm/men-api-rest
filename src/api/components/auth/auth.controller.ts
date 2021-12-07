@@ -4,7 +4,7 @@ import config from "@config/global";
 import jwt from 'jsonwebtoken';
 import userModel from '../user/user.model';
 import bcrypt from 'bcrypt';
-import session from 'express-session';
+import httpErrorHandler from '@services/errorHandler';
 
 //POST - Authenticate - Retrieves token to registered user
 var authentication = function (req: Request, res: Response) {
@@ -35,6 +35,18 @@ var authentication = function (req: Request, res: Response) {
     }).select({ 'password': 1, 'role':1 });
 };
 
+var logout = function (req: Request, res: Response) {
+    logger.info("POST /auth/logout");
+    req.session.destroy((err: any) => {
+        if (err) return httpErrorHandler(err, res);
+        res.status(200).json({
+            success: true,
+            message: 'User logged out succesfuly'
+        })
+    });
+}
+
 module.exports = {
-    authentication: authentication
+    authentication: authentication,
+    logout: logout
 }

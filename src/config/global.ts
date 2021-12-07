@@ -17,7 +17,7 @@ const config = {
     jwt: {
         secret: 'JWT_SECRET_KEY',
         expiration: '1800s',
-        allowed: ['/api/auth/login']
+        allowed: ['/api/auth/login', '/api/auth/logout']
     },
     session: {
         secret: 'SESSION_SECRET_KEY',
