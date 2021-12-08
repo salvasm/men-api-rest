@@ -33,7 +33,9 @@
     "typescript": "^4.3.4"
   },
   "scripts": {
-    "start": "npm-run-all --parallel watch:build watch:server --print-label",
+    "start": "node ./dist/index.js",
+    "build": "tsc",
+    "dev": "npm-run-all --parallel watch:build watch:server --print-label",
     "clean": "rimraf dist",
     "watch:build": "tsc --watch",
     "watch:server": "nodemon ./dist/index.js --watch ./dist"
