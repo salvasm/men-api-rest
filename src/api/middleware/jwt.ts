@@ -12,11 +12,14 @@ function authJWT(request: Request, response: Response, next: NextFunction) {
         if (authHeader) {
             const token = authHeader.split(' ')[1];
             
-            if (jwt.verify(token, config.jwt.secret)) {
-                next();
-            } else {
-                response.sendStatus(401);
-            }
+            jwt.verify(token, config.jwt.secret, function(err:any, decoded:any) {
+                if (err) {
+                    return response.sendStatus(401);
+                  }
+
+                  request.decoded = decoded;
+                  return next();
+            });
         } else {
             response.sendStatus(401);
         }

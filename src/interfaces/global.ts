@@ -20,3 +20,11 @@ declare module 'express-session' {
         role: { [key: string]: any };
     }
 }
+declare global {
+    namespace Express {
+      interface Request {
+        decoded: string;
+      }
+    }
+  }
+  

@@ -17,12 +17,17 @@ const config = {
     jwt: {
         secret: 'JWT_SECRET_KEY',
         expiration: '1800s',
-        allowed: ['/api/auth/login', '/api/auth/logout']
+        allowed: ['/api/auth/login']
     },
     session: {
         secret: 'SESSION_SECRET_KEY',
         resave: true,
         saveUninitialized: true
+    },
+    acl: {
+        filename: 'permissions.json',
+        path: 'src/config/',
+        baseUrl: '/'
     }
 };
 

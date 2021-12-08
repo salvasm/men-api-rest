@@ -6,6 +6,7 @@ import methodOverride from 'method-override';
 import { connect } from '@services/database';
 import errorMiddleware from './middleware/error';
 import session from 'express-session';
+import acl from 'express-acl';
 
 class App {
     public app: express.Application;
@@ -15,6 +16,7 @@ class App {
         this.app = express();
         this.port = port;
 
+        this.initializeACL();
         this.initializeMiddlewares();
         this.initializeControllers();
         this.initializeDatabase();
@@ -27,6 +29,7 @@ class App {
         this.app.use(errorMiddleware);
         this.app.use(jwt);
         this.app.use(session(config.session));
+        this.app.use(acl.authorize.unless({path: config.jwt.allowed}));
     }
 
     private initializeControllers() {
@@ -36,6 +39,10 @@ class App {
 
     private initializeDatabase() {
         connect(config.db);
+    }
+
+    private initializeACL() {
+        acl.config(config.acl);
     }
 
     public listen() {
