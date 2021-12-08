@@ -22,9 +22,8 @@ declare module 'express-session' {
 }
 declare global {
     namespace Express {
-      interface Request {
-        decoded: string;
-      }
+        interface Request {
+            decoded: string;
+        }
     }
-  }
-  
+}
