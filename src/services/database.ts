@@ -2,12 +2,6 @@ import mongoose from 'mongoose';
 import logger from '@config/logger';
 import { dbData } from 'interfaces/global';
 
-const options = {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useCreateIndex: true
-};
-
 export function getMongoDbUri(dbData: dbData) {
     var dbUser = dbData.user && dbData.pass ? dbData.user + ':' + dbData.pass + '@' : '';
     var dbPort = dbData.port ? dbData.port : undefined;
@@ -19,7 +13,7 @@ export function getMongoDbUri(dbData: dbData) {
 // Connection to DB
 export function connect(dbData: dbData) {
     var uri = getMongoDbUri(dbData);
-    mongoose.connect(uri, options).then(() => {
+    mongoose.connect(uri).then(() => {
         logger.info('Db: \tDONE\t Port: ' + (dbData.port || 27017));
     }).catch(error => {
         logger.error('Db: \tFAIL\n' + error);
