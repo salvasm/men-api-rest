@@ -1,5 +1,7 @@
 <div align="center">
-    <img src="https://www.salvasm.dev/images/projects/node_api_s.png" alt="Logo">
+    <a href="https://github.com/salvasm/men-api-rest">
+        <img src="https://www.salvasm.dev/images/projects/node_api_s.png" alt="Logo">
+    </a>
     <h3 align="center">MEN API Rest</h3>
     <p align="center">
         Boilerplate API Rest coded with TypeScript to jumpstart your projects quickly
@@ -34,11 +36,15 @@
 ## About The Project
 There are a lot of ideas I want to apply to practice, learn or just for fun. Most of those projects begins with a user authentication system and some importants elements to create, read, update or delete (CRUD). So I decided to implement what I thinks are some basics to start those projects in order to avoid to rewrite some code.
 
+<p align="right">(<a href="#top">back to top</a>)</p>
+
 <!-- BUILT WITH -->
 ### Built With
 - [MongoDB](https://www.mongodb.com/)
 - [ExpressJS](https://expressjs.com/)
 - [Node.js](https://nodejs.org/)
+
+<p align="right">(<a href="#top">back to top</a>)</p>
 
 <!-- WHAT INCLUDES -->
 ### What Includes
@@ -48,6 +54,8 @@ There are a lot of ideas I want to apply to practice, learn or just for fun. Mos
 - sessions
 - ACL
 - Error Handling
+
+<p align="right">(<a href="#top">back to top</a>)</p>
 
 <!-- GETTING STARTED -->
 ## Getting Started
@@ -66,6 +74,7 @@ npm install
 ```
 npm run build && npm run start
 ```
+<p align="right">(<a href="#top">back to top</a>)</p>
 
 <!-- ROUTES -->
 ## Routes
@@ -80,6 +89,8 @@ npm run build && npm run start
         - PUT /:id
         - DELETE /:id
 
+<p align="right">(<a href="#top">back to top</a>)</p>
+
 <!-- DEFAULT CONFIGURATIONS -->
 ## Default Configurations
 
@@ -91,6 +102,8 @@ Defined in User Model Schema.
 - **guest**: *Default for non authenticated users*
 
 Same roles used by ACL.
+
+<p align="right">(<a href="#top">back to top</a>)</p>
 
 <!-- ACL PERMISSIONS -->
 ### ACL Permissions
@@ -127,6 +140,8 @@ Current applied permissions:
 ```
 To apply custom permissions just modify ``permission.json`` on config folder.
 
+<p align="right">(<a href="#top">back to top</a>)</p>
+
 <!-- CONTRIBUTING -->
 ## Contributing
 Any contributions you make are **greatly appreciated**.
@@ -139,14 +154,20 @@ If you have a suggestion that would make this better, please fork the repo and c
 4. Push to the Branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
 
+<p align="right">(<a href="#top">back to top</a>)</p>
+
 <!-- CONTACT -->
-## 5. Contact
+## Contact
 
 <div align="center">
-    <img src="https://www.salvasm.dev/images/s_head_black.png" alt="Logo" width="150">
+    <a href="#">
+        <img src="https://www.salvasm.dev/images/s_head_black.png" alt="Logo" width="150">
+    </a>
     <div align="center">
         <a href="mailto:salvador.sanchez.mendez@gmail.com">Email</a>
         or 
         <a href="https://twitter.com/_salvasm">Twitter</a>
     </div>
 </div>
+
+<p align="right">(<a href="#top">back to top</a>)</p>
