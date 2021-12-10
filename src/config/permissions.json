@@ -8,5 +8,20 @@
         "action": "allow"
       }
     ]
+  },
+  {
+    "group": "user",
+    "permissions": [
+      {
+        "resource": "user/*",
+        "methods": ["GET"],
+        "action": "allow"
+      },
+      {
+        "resource": "auth/logout",
+        "methods": ["POST"],
+        "action": "allow"
+      }
+    ]
   }
 ]

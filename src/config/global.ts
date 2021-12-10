@@ -27,7 +27,7 @@ const config = {
     acl: {
         filename: 'permissions.json',
         path: 'src/config/',
-        baseUrl: '/'
+        baseUrl: '/api'
     }
 };
 
