@@ -1,6 +1,6 @@
 import { Response, Request } from 'express';
 import mongoose from 'mongoose';
-import httpErrorHandler from '@services/errorHandler';
+import httpErrorHandler from '@handlers/globalErrorHandler';
 import logger from '@config/logger';
 
 class CRUD {

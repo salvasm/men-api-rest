@@ -46,7 +46,8 @@
     "@components": "dist/api/components",
     "@config": "dist/config",
     "@services": "dist/services",
-    "@interfaces": "dist/interfaces"
+    "@interfaces": "dist/interfaces",
+    "@handlers": "dist/services/handlers"
   },
   "author": "salvasm",
   "license": "MIT"

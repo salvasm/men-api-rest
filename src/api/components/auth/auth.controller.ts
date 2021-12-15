@@ -4,7 +4,7 @@ import config from "@config/global";
 import jwt from 'jsonwebtoken';
 import userModel from '../user/user.model';
 import bcrypt from 'bcrypt';
-import httpErrorHandler from '@services/errorHandler';
+import httpErrorHandler from '@handlers/globalErrorHandler';
 
 //POST - Authenticate - Retrieves token to registered user
 var authentication = function (req: Request, res: Response) {
