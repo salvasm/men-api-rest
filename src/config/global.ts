@@ -28,6 +28,9 @@ const config = {
         filename: 'permissions.json',
         path: 'src/config/',
         baseUrl: '/api'
+    },
+    components: {
+        path: './src/api/components'
     }
 };
 

@@ -1,15 +1,18 @@
-const router = require('express').Router();
+import fs from 'fs';
+import config from '@config/global';
+import express from 'express';
+const router = express.Router();
 
 // Root API path
 router.get('/', (req: any, res: any) => {
     res.send('Welcome to Node.js API REST');
 });
 
-// All component routes
-var authRoutes = require('./components/auth/auth.routes');
-router.use('/auth', authRoutes);
-var userRoutes = require('./components/user/user.routes');
-router.use('/user', userRoutes);
+// All component routes dynamically
+const components = fs.readdirSync(config.components.path)
+for (const component of components) {
+    router.use('/' + component, require('@components/' + component + '/' + component + '.routes'));
+}
 
 // Handle undefined Routes
 router.use('*', (req: any, res: any) => {
