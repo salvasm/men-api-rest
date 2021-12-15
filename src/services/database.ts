@@ -14,7 +14,7 @@ export function getMongoDbUri(dbData: dbData) {
 export function connect(dbData: dbData) {
     var uri = getMongoDbUri(dbData);
     mongoose.connect(uri).then(() => {
-        logger.debug('Db: \tDONE\t Port: ' + (dbData.port || 27017));
+        logger.info('Db: \tDONE\t Port: ' + (dbData.port || 27017));
     }).catch(error => {
         logger.error('Db: \tFAIL\n' + error);
     })
