@@ -13,7 +13,7 @@ class CRUD {
     }
 
     private initModel(name: string) {
-        require('./' + name + '/' + name + '.model');
+        require('@components/' + name + '/' + name + '.model');
         return mongoose.model(this.name);
     }
 

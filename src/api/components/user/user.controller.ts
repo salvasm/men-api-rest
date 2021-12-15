@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import logger from '@config/logger';
-import CRUD from '@components/crud'
 import UserDto from './user.dto';
+import CRUD from '@services/crud';
 
 // Create CRUD
 const userCrud = new CRUD('User');
