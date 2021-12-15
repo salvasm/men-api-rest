@@ -7,6 +7,7 @@ import { connect } from '@services/database';
 import errorMiddleware from './middleware/error';
 import session from 'express-session';
 import acl from 'express-acl';
+import helmet from 'helmet';
 
 class App {
     public app: express.Application;
@@ -25,6 +26,7 @@ class App {
     private initializeMiddlewares() {
         this.app.use(express.urlencoded({ extended: false }));
         this.app.use(express.json());
+        this.app.use(helmet());
         this.app.use(methodOverride());
         this.app.use(errorMiddleware);
         this.app.use(jwt);
