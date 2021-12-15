@@ -1,5 +1,5 @@
 class HttpException extends Error {
-    success: boolean,
+    success: boolean;
     status: number;
     message: string;
     constructor(status: number, message: string) {
