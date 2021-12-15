@@ -3,3 +3,4 @@
 /logs
 .jshintrc
 .vscode
+.vercel
