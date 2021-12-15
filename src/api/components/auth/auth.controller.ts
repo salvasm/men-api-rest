@@ -8,7 +8,7 @@ import httpErrorHandler from '@services/errorHandler';
 
 //POST - Authenticate - Retrieves token to registered user
 var authentication = function (req: Request, res: Response) {
-    logger.info("POST /auth/authentication");
+    logger.debug("POST /auth/authentication");
     userModel.findOne({username: req.body.user}, function (err: any, result: any) {
         if (result && bcrypt.compareSync(req.body.password, result.password)) {
             /* JWT */
@@ -36,7 +36,7 @@ var authentication = function (req: Request, res: Response) {
 };
 
 var logout = function (req: Request, res: Response) {
-    logger.info("POST /auth/logout");
+    logger.debug("POST /auth/logout");
     req.session.destroy((err: any) => {
         if (err) return httpErrorHandler(err, res);
         res.status(200).json({

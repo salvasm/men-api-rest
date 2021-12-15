@@ -21,7 +21,7 @@ class CRUD {
         let _ = this;
         item.save(function (err: any, result: any) {
             if (err) return httpErrorHandler(err, res);
-            logger.info(req.method + ' ' + req.originalUrl);
+            logger.debug(req.method + ' ' + req.originalUrl);
             res.status(201).json({
                 success: true,
                 message: _.name + ' was created',
@@ -33,7 +33,7 @@ class CRUD {
     public findAll(req: Request, res: Response) {
         this.model.find(function (err: any, result: any) {
             if (err) return httpErrorHandler(err, res);
-            logger.info(req.method + ' ' + req.originalUrl);
+            logger.debug(req.method + ' ' + req.originalUrl);
             return res.status(200).json({
                 success: true,
                 result: result
@@ -45,7 +45,7 @@ class CRUD {
         let _ = this;
         this.model.findById(req.params.id, function (err: any, result: any) {
             if (err) return httpErrorHandler(err, res);
-            logger.info(req.method + ' ' + req.originalUrl);
+            logger.debug(req.method + ' ' + req.originalUrl);
             if (result) {
                 return res.status(200).json({
                     success: true,
@@ -66,7 +66,7 @@ class CRUD {
         if (item.length) {
             this.model.findOneAndUpdate(req.params.id, {$set: item}, (err: any, result: any) => {
                 if (err) return httpErrorHandler(err, res);
-                logger.info(req.method + ' ' + req.originalUrl);
+                logger.debug(req.method + ' ' + req.originalUrl);
                 if (result) {
                     return res.status(200).json({
                         success: true,
@@ -93,7 +93,7 @@ class CRUD {
         let _ = this;
         this.model.findByIdAndDelete(req.params.id, (err: any, result: any) => {
             if (err) return httpErrorHandler(err, res);
-            logger.info(req.method + ' ' + req.originalUrl);
+            logger.debug(req.method + ' ' + req.originalUrl);
             if (result) {
                 return res.status(200).json({
                     success: true,
