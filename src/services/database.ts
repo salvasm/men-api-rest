@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 import logger from '@config/logger';
-import { dbData } from 'interfaces/global';
+import { dbData } from '@interfaces/global';
 
 export function getMongoDbUri(dbData: dbData) {
     var dbUser = dbData.user && dbData.pass ? dbData.user + ':' + dbData.pass + '@' : '';

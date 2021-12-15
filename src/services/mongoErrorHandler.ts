@@ -1,5 +1,5 @@
 import { Response } from "express";
-import { error } from "../interfaces/global";
+import { error } from "@interfaces/global";
 
 const mongoErrors = {
 	duplicatedKeyError:  (error: error, res: Response) => {

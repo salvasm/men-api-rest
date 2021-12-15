@@ -45,7 +45,8 @@
     "@middlewares": "dist/api/middleware",
     "@components": "dist/api/components",
     "@config": "dist/config",
-    "@services": "dist/services"
+    "@services": "dist/services",
+    "@interfaces": "dist/interfaces"
   },
   "author": "salvasm",
   "license": "MIT"

@@ -1,6 +1,6 @@
 import { Response } from 'express';
-import { error } from '../interfaces/global'
-import mongoErrors from './mongoErrorHandler'
+import { error } from '@interfaces/global'
+import mongoErrors from '@services/mongoErrorHandler'
 
 function httpErrorHandler(error: error, res: Response) {
     var status = error.status || 500;
