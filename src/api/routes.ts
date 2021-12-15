@@ -18,6 +18,7 @@ for (const component of components) {
 router.use('*', (req: any, res: any) => {
     res.status(404);
     res.send({
+        success: false,
         status: '404',
         message: 'Page was not found'
     });
