@@ -34,7 +34,7 @@
 
 <!-- ABOUT THE PROJECT -->
 ## About The Project
-There are a lot of ideas I want to apply to practice, learn or just for fun. Most of those projects begins with a user authentication system and some importants elements to create, read, update or delete (CRUD). So I decided to implement what I thinks are some basics to start those projects in order to avoid to rewrite some code.
+There are a lot of ideas I want to apply to practice, learn or just for fun. Most of those projects begin with a user authentication system and some important elements to create, read, update or delete (CRUD). So, I decided to implement what I think are some basics to start those projects in order to avoid to rewrite some code.
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
