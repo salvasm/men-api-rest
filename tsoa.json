@@ -1,0 +1,13 @@
+{
+    "baseUrl": "./src/api",
+    "entryFile": "src/index.ts",
+    "controllerPathGlobs": ["src/**/*.controller.ts"],
+    "spec": {
+        "outputDirectory": "./src/api",
+        "specVersion": 3
+    },
+    "routes": {
+        "routesDir": "dist",
+        "routesPathGlobs": ["src/**/*.routes.ts"]
+    }
+  }

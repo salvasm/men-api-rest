@@ -10,6 +10,9 @@ import logger from '@config/logger';
 import jwt from '@middlewares/jwt';
 import connect from '@services/database';
 import errorMiddleware from '@middlewares/error';
+/* Swagger Doc */
+import swaggerUi from 'swagger-ui-express';
+import swaggerDocument from './swagger.json';
 
 class App {
     public app: express.Application;
@@ -19,6 +22,7 @@ class App {
         this.app = express();
         this.port = port;
         
+        this.initSwagger();
         this.initMiddlewares();
         this.initDatabase();
         this.initControllers();
@@ -48,6 +52,10 @@ class App {
     private initACL() {
         acl.config(config.acl);
         this.app.use(acl.authorize.unless({path: config.jwt.allowed}));
+    }
+
+    private initSwagger() {
+        this.app.use(config.swagger.route, swaggerUi.serve, swaggerUi.setup(swaggerDocument))
     }
 
     public listen() {
