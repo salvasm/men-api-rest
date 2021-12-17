@@ -34,6 +34,9 @@ const config = {
     },
     components: {
         path: './src/api/components'
+    },
+    swagger: {
+        route: '/api-docs'
     }
 };
 
