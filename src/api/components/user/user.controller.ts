@@ -1,5 +1,4 @@
 import { Request, Response } from 'express';
-import logger from '@config/logger';
 import UserDto from './user.dto';
 import CRUD from '@services/crud';
 

@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 import logger from '@config/logger';
 import { dbData } from '@interfaces/global';
 
-export function getMongoDbUri(dbData: dbData) {
+function getMongoDbUri(dbData: dbData) {
     var dbUser = dbData.user && dbData.pass ? dbData.user + ':' + dbData.pass + '@' : '';
     var dbPort = dbData.port ? dbData.port : undefined;
     var dbHost = dbPort ? dbData.host + ':' + dbPort : dbData.host;
@@ -11,7 +11,7 @@ export function getMongoDbUri(dbData: dbData) {
 }
 
 // Connection to DB
-export function connect(dbData: dbData) {
+function connect(dbData: dbData) {
     var uri = getMongoDbUri(dbData);
     mongoose.connect(uri).then(() => {
         logger.info('Db: \tDONE\t Port: ' + (dbData.port || 27017));
@@ -19,3 +19,5 @@ export function connect(dbData: dbData) {
         logger.error('Db: \tFAIL\n' + error);
     })
 };
+
+export default connect;

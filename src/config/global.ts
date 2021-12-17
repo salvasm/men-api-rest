@@ -1,4 +1,7 @@
 const config = {
+    api: {
+        baseUrl: "/api"
+    },
     server: {
         port: 3000,
         host: 'localhost'
@@ -17,7 +20,7 @@ const config = {
     jwt: {
         secret: 'JWT_SECRET_KEY',
         expiration: '1800s',
-        allowed: ['/api/auth/login']
+        allowed: ['/api/', '/api/auth/login']
     },
     session: {
         secret: 'SESSION_SECRET_KEY',
