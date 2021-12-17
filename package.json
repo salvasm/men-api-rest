@@ -42,6 +42,7 @@
     "dev": "npm-run-all --parallel watch:build watch:server --print-label",
     "clean": "rimraf dist",
     "watch:build": "tsc --watch",
+    "swagger": "tsoa routes && tsoa swagger",
     "watch:server": "nodemon ./dist/index.js --watch ./dist"
   },
   "_moduleAliases": {

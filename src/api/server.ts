@@ -12,7 +12,7 @@ import connect from '@services/database';
 import errorMiddleware from '@middlewares/error';
 /* Swagger Doc */
 import swaggerUi from 'swagger-ui-express';
-import swaggerDocument from './swagger.json';
+import swaggerDocument from './docs/swagger.json';
 
 class App {
     public app: express.Application;

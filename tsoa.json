@@ -1,9 +1,10 @@
 {
     "baseUrl": "./src/api",
     "entryFile": "src/index.ts",
+    "noImplicitAdditionalProperties": "throw-on-extras",
     "controllerPathGlobs": ["src/**/*.controller.ts"],
     "spec": {
-        "outputDirectory": "./src/api",
+        "outputDirectory": "./src/api/docs",
         "specVersion": 3
     },
     "routes": {
