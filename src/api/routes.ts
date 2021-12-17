@@ -1,11 +1,14 @@
 import fs from 'fs';
 import config from '@config/global';
 import express from 'express';
+import HttpException from './exceptions/HttpException';
 const router = express.Router();
 
 // Root API path
 router.get('/', (req: any, res: any) => {
-    res.send('Welcome to Node.js API REST');
+    res.status(200).send({
+        message: 'Welcome to MEN API REST'
+    });
 });
 
 // All component routes dynamically
@@ -16,12 +19,7 @@ for (const component of components) {
 
 // Handle undefined Routes
 router.use('*', (req: any, res: any) => {
-    res.status(404);
-    res.send({
-        success: false,
-        status: '404',
-        message: 'Page was not found'
-    });
+    throw new HttpException(404, 'Route was not found');
 });
 
 module.exports = router;
