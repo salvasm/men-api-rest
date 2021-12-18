@@ -1,52 +1,16 @@
 import { Request, Response } from 'express';
-import logger from '@config/logger';
-import config from "@config/global";
-import jwt from 'jsonwebtoken';
-import userModel from '../user/user.model';
-import bcrypt from 'bcrypt';
-import httpErrorHandler from '@handlers/globalErrorHandler';
+import HttpException from '@api/exceptions/HttpException';
+import * as AuthService from '@services/auth.service';
 
-//POST - Authenticate - Retrieves token to registered user
-var authentication = function (req: Request, res: Response) {
-    logger.debug("POST /auth/authentication");
-    userModel.findOne({username: req.body.user}, function (err: any, result: any) {
-        if (result && bcrypt.compareSync(req.body.password, result.password)) {
-            /* JWT */
-            const payload = {
-                id: result.id,
-                username: req.body.user,
-                role: result.role
-            }
-            const token = jwt.sign(payload, config.jwt.secret);
-            /* Session */
-            req.session.username = req.body.user;
-            req.session.role = result.role;
-
-            res.json({
-                success: true,
-                result: token
-            })
-        } else {
-            res.json({
-                success: false,
-                message: 'Wrong username or password'
-            })
+class UserController {
+    authentication = async (req: Request, res: Response) => {       
+        try {
+            const result = await AuthService.login(req.body.user, req.body.password)
+            return res.status(result.status).json(result);
+        } catch (error: unknown) {
+            throw new HttpException(500, 'Internal Server Error');
         }
-    }).select({ 'password': 1, 'role':1 });
-};
-
-var logout = function (req: Request, res: Response) {
-    logger.debug("POST /auth/logout");
-    req.session.destroy((err: any) => {
-        if (err) return httpErrorHandler(err, res);
-        res.status(200).json({
-            success: true,
-            message: 'User logged out succesfuly'
-        })
-    });
+    };
 }
 
-module.exports = {
-    authentication: authentication,
-    logout: logout
-}
+export default UserController;

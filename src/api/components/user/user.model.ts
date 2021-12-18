@@ -7,7 +7,8 @@ export interface IUser {
     lastname: string,
     password: string,
     gender?: string,
-    birthday?: Date
+    birthday?: Date,
+    role: string
 }
 
 const userSchema = new Schema({
