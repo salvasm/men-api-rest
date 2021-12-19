@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import HttpException from '@api/exceptions/HttpException';
 import * as AuthService from '@services/auth.service';
 
-class UserController {
+class AuthController {
     authentication = async (req: Request, res: Response) => {       
         try {
             const result = await AuthService.authentication(req.body.user, req.body.password)
@@ -13,4 +13,4 @@ class UserController {
     };
 }
 
-export default UserController;
+export default AuthController;
