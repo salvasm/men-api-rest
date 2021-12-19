@@ -10,6 +10,7 @@ class User implements IUser {
     password!: string;
     gender?: string | undefined;
     birthday?: Date | undefined;
+    role!: string;
     length: number;
 
     constructor(data: IUser) {
@@ -20,6 +21,7 @@ class User implements IUser {
         if (data.password) this.password = bcrypt.hashSync(data.password, config.bcrypt.saltRounds);
         if (data.gender) this.gender = data.gender;
         if (data.birthday) this.birthday = data.birthday;
+        if (data.role) this.role = data.role;
         this.length = Object.keys(data).length;
     }
 
@@ -77,6 +79,14 @@ class User implements IUser {
 
     public setBirthday(value: Date) {
         this.birthday = value;
+    }
+
+    public getRole() {
+        return this.role;
+    }
+
+    public setRole(value: string) {
+        this.role = value;
     }
 }
 

@@ -1,7 +1,8 @@
 import * as express from 'express';
 let router = express.Router();
-// Import Controllers
-var UserCtrl = require('./user.controller');
+// Import Controller
+import UserController from '@components/user/user.controller';
+const UserCtrl = new UserController();
 
 /**
  * CRUD Routes:

@@ -1,41 +1,62 @@
 import { Request, Response } from 'express';
 import UserDto from './user.dto';
-import CRUD from '@services/crud';
+import CRUD from '@services/crud.service';
+import HttpException from '@api/exceptions/HttpException';
 
-// Create CRUD
-const userCrud = new CRUD('User');
+class UserController {
+    private crudService;
 
-//GET - Return all users
-var findAll = function (req: Request, res: Response) {
-    userCrud.findAll(req, res);
-};
+    constructor() {
+        this.crudService = new CRUD('User');
+    }
 
-//POST - Insert a new User
-var create = function (req: Request, res: Response) {
-    var user = new UserDto(req.body);
-    userCrud.create(req, res, userCrud.model(user));
-};
+    findAll = async (res: Response) => {
+        try {
+            const result = await this.crudService.findAll();
+            return res.status(result.status).json(result);
+        } catch (error: unknown) {
+            throw new HttpException(500, 'Internal Server Error');
+        }
+    };
 
-//GET - Return a User with specified ID
-var read = function (req: Request, res: Response) {
-    userCrud.findById(req, res);
-};
+    create = async (req: Request, res: Response) => {
+        try {
+            var user = new UserDto(req.body);
+            const result = await this.crudService.create(this.crudService.model(user));
+            console.log(result);
+            return res.status(result.status).json(result);
+        } catch (error) {
+            throw new HttpException(500, 'Internal Server Error');
+        }
+    };
 
-//PUT - Update a register already exists
-var update = function (req: Request, res: Response) {
-    var user = new UserDto(req.body);
-    userCrud.update(req, res, user);
-};
+    read = async (req: Request, res: Response) => {
+        try {
+            const result = await this.crudService.findById(req.params.id);
+            return res.status(result.status).json(result);
+        } catch (error) {
+            throw new HttpException(500, 'Internal Server Error');
+        }
+    };
 
-//DELETE - Delete a User with specified ID
-var deleteOne = function (req: Request, res: Response) {
-    userCrud.delete(req, res);
-};
+    update = async (req: Request, res: Response) => {
+        try {
+            var user = new UserDto(req.body);
+            const result = await this.crudService.update(req.params.id, user);
+            return res.status(result.status).json(result);
+        } catch (error) {
+            throw new HttpException(500, 'Internal Server Error');
+        }
+    };
 
-module.exports = {
-    findAll: findAll,
-    create: create,
-    read: read,
-    update: update,
-    delete: deleteOne
+    delete = async (req: Request, res: Response) => {
+        try {
+            const result = await this.crudService.delete(req.params.id);
+            return res.status(result.status).json(result);
+        } catch (error) {
+            throw new HttpException(500, 'Internal Server Error');
+        }
+    };
 }
+
+export default UserController;
