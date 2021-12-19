@@ -14,6 +14,13 @@ export interface dbData {
     pass?: string;
 }
 
+export interface apiResponse {
+    success: boolean,
+    status: number,
+    result?: Object,
+    message?: string
+}
+
 declare module 'express-session' {
     export interface SessionData {
         username: { [key: string]: any };

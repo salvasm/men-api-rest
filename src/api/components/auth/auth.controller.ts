@@ -5,7 +5,7 @@ import * as AuthService from '@services/auth.service';
 class UserController {
     authentication = async (req: Request, res: Response) => {       
         try {
-            const result = await AuthService.login(req.body.user, req.body.password)
+            const result = await AuthService.authentication(req.body.user, req.body.password)
             return res.status(result.status).json(result);
         } catch (error: unknown) {
             throw new HttpException(500, 'Internal Server Error');
