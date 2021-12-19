@@ -8,7 +8,7 @@ import { apiResponse } from "@interfaces/global";
  * Check user exists on DB and the password is correct
  * @param {string} username User name
  * @param {string} password User password
- * @returns {Promise<apiReponse>} User token
+ * @returns {Promise<apiResponse>} User token
  */
 export const authentication = async (username: string, password: string) : Promise<apiResponse> => {
     var user = await userModel.findOne({username: username}).select({ 'password': 1, 'role':1 });
