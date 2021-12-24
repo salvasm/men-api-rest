@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 import { apiResponse } from "@interfaces/global";
+import { JSONresponse } from '@api/components/helpers';
 
 class CRUD {
     private name: string;
@@ -27,18 +28,9 @@ class CRUD {
      */
     public async create(item: any): Promise<apiResponse> {
         return await item.save().then((result: Object) : apiResponse => {
-            console.log(result);
-            return {
-                success: true,
-                status: 201,
-                message: this.name + ' was created'
-            }
+            return JSONresponse(true, 201, this.name + ' was created')
         }).catch((err: any) => {
-            return {
-                success: false,
-                status: 500,
-                error: err
-            }
+            return JSONresponse(false, 500, err)
         })
     }
 
@@ -48,29 +40,10 @@ class CRUD {
      */
     public async findAll(): Promise<apiResponse> {
         return await this.model.find().then((result: Object) : apiResponse => {
-            var response;
-
-            if (result) {
-                response = {
-                    success: true,
-                    status: 200,
-                    result: result
-                }
-            } else {
-                response = {
-                    success: false,
-                    status: 404,
-                    result: 'There are no items for ' + this.name
-                }
-            }
-
+            var response = result ? JSONresponse(true, 200, result) : JSONresponse(false, 404, 'There are no items for ' + this.name);
             return response;
         }).catch((err: mongoose.Error) => {
-            return {
-                success: false,
-                status: 500,
-                error: err
-            }
+            return JSONresponse(false, 500, err);
         });
     }
 
@@ -81,29 +54,10 @@ class CRUD {
      */
     public async findById(id: string): Promise<apiResponse> {
         return await this.model.findById(id).then((result: Object) : apiResponse => {
-            var response;
-
-            if (result) {
-                response = {
-                    success: true,
-                    status: 200,
-                    result: result
-                }
-            } else {
-                response = {
-                    success: false,
-                    status: 404,
-                    result: this.name + ' was not found'
-                }
-            }
-
+            var response = result ? JSONresponse(true, 200, result) : JSONresponse(false, 404, this.name + ' was not found');
             return response;
         }).catch((err: mongoose.Error) => {
-            return {
-                success: false,
-                status: 500,
-                error: err
-            }
+            return JSONresponse(false, 500, err);
         });
     }
 
@@ -115,37 +69,14 @@ class CRUD {
      */
     public async update(id: string, item: any): Promise<apiResponse> {
         if (!item.length) {
-            return {
-                success: false,
-                status: 404,
-                message: this.name + ' was not updated. No fields to update has been sent'
-            }
+            return JSONresponse(false, 404, this.name + ' was not updated. No fields to update has been sent');
         }
 
         return await this.model.findOneAndUpdate(id, {$set: item}).then((result: Object) : apiResponse => {
-            var response;
-
-            if (result) {
-                response = {
-                    success: true,
-                    status: 200,
-                    result: result
-                }
-            } else {
-                response = {
-                    success: false,
-                    status: 404,
-                    result: this.name + ' was not updated'
-                }
-            }
-
+            var response = result ? JSONresponse(true, 200, result) : JSONresponse(false, 404, this.name + ' was not updated');
             return response;
         }).catch((err: mongoose.Error) => {
-            return {
-                success: false,
-                status: 500,
-                error: err
-            }
+            return JSONresponse(false, 500, err);
         });
     }
 
@@ -156,29 +87,10 @@ class CRUD {
      */
     public async delete(id: string): Promise<apiResponse> {
         return await this.model.findByIdAndDelete(id).then((result: Object) => {
-            var response;
-
-            if (result) {
-                response = {
-                    success: true,
-                    status: 200,
-                    result: this.name + ' was deleted'
-                }
-            } else {
-                response = {
-                    success: false,
-                    status: 404,
-                    result: this.name + ' was not deleted'
-                }
-            }
-
+            var response = result ? JSONresponse(true, 200, this.name + ' was deleted') : JSONresponse(false, 404, this.name + ' was not deleted');
             return response;
         }).catch((err: mongoose.Error) => {
-            return {
-                success: false,
-                status: 500,
-                error: err
-            }
+            return JSONresponse(false, 500, err);
         });
     }
 }
