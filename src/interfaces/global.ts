@@ -17,7 +17,7 @@ export interface dbData {
 export interface apiResponse {
     success: boolean,
     status: number,
-    result?: Object,
+    result?: { [key: string]: any; } | undefined,
     message?: string
 }
 

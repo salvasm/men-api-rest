@@ -2,6 +2,7 @@ import config from "@config/global";
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 import userModel from '@components/user/user.model';
+import { Request, Response } from 'express';
 import { apiResponse } from "@interfaces/global";
 
 /**
@@ -20,11 +21,14 @@ export const authentication = async (username: string, password: string) : Promi
             role: user.role
         }
         const token = jwt.sign(payload, config.jwt.secret);
-        
+
         return {
             success: true,
             status: 200,
-            result: token
+            result: {
+                token: token,
+                role: payload.role
+            }
         }
     } else {
         return {
@@ -33,4 +37,29 @@ export const authentication = async (username: string, password: string) : Promi
             message: 'Unauthorized'
         }
     }
+}
+
+/**
+ * Close all sessions and connections relatives to current user
+ * @param {string} username Username to logout
+ * @returns {Promise<apiResponse>} JSON with action result
+ */
+export const unauthentication = async (req: Request) : Promise<apiResponse> => {
+    var result = {
+        success: true,
+        status: 200,
+        message: 'User logged out succesfuly'
+    };
+
+    req.session.destroy((err: any) => {
+        if (err) {
+            result = {
+                success: false,
+                status: 500,
+                message: 'Some error occured during logged out'
+            };
+        }
+    });
+
+    return result;
 }
