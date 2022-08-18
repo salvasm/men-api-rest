@@ -1,13 +1,15 @@
 import { NextFunction, Request, Response } from 'express';
 import UserDto from './user.dto';
 import CRUD from '@services/crud.service';
+import { getPagination } from '@components/helpers'
 const crud = new CRUD('User');
 class UserController {
     constructor() {}
 
-    findAll = async (req: Request, res: Response, next: NextFunction) => {
+    async findAll (req: Request, res: Response, next: NextFunction){
         try {
-            var result = await crud.findAll();
+            const { limit, skipIndex } = getPagination(req.query);
+            var result = await crud.findAll(limit, skipIndex);
             return res.status(result.status).json(result);
         } catch (error: unknown) {
             next(error);

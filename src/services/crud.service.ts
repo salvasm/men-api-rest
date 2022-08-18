@@ -38,8 +38,8 @@ class CRUD {
      * Find all items for initialiced model
      * @returns {apiResponse} JSON with all items found
      */
-    public async findAll(): Promise<apiResponse> {
-        return await this.model.find().then((result: Object) : apiResponse => {
+    public async findAll(limit: number, skipIndex: number): Promise<apiResponse> {
+        return await this.model.find({}).limit(limit).skip(skipIndex).then((result: Object) : apiResponse => {
             var response = result ? JSONresponse(true, 200, result) : JSONresponse(false, 404, 'There are no items for ' + this.name);
             return response;
         }).catch((err: mongoose.Error) => {
