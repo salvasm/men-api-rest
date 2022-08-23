@@ -36,7 +36,17 @@ const config = {
         path: './src/api/components'
     },
     swagger: {
-        route: '/api-docs'
+        route: '/api/docs',
+        options: {
+            definition: {
+                openapi: "3.0.0",
+                info: {
+                    title: "MEN API Rest",
+                    version: "1.0.0"
+                },
+            },
+            apis: ["src/api/routes.ts"]
+        }
     }
 };
 

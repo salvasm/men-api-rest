@@ -36,6 +36,7 @@ class App {
         this.app.use(session(config.session));
         this.app.use(jwt);
         this.initACL();
+        
     }
 
     private initControllers() {
