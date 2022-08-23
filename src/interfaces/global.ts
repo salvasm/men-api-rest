@@ -17,14 +17,14 @@ export interface dbData {
 export interface apiResponse {
     success: boolean,
     status: number,
-    result?: Object,
+    result?: { [key: string]: any; } | string,
     message?: string
 }
 
 declare module 'express-session' {
     export interface SessionData {
         username: { [key: string]: any };
-        role: { [key: string]: any };
+        role: { [key: string]: any } | string;
     }
 }
 declare global {

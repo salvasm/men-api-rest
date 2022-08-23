@@ -80,7 +80,7 @@ npm run build && npm run start
 ## Routes
 - /api
     - /auth
-        - POST /authentication
+        - POST /login
         - POST /logout
     - /user
         - GET /

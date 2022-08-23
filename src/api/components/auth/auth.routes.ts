@@ -1,5 +1,5 @@
-import * as express from 'express';
-let router = express.Router();
+import { Router } from 'express';
+let router = Router();
 // Import Controller
 import AuthController from '@components/auth/auth.controller';
 const AuthCtrl = new AuthController();
@@ -9,5 +9,6 @@ const AuthCtrl = new AuthController();
  * POST     /api/auth/login
  */
 router.route('/login').post(AuthCtrl.authentication);
+router.route('/logout').post(AuthCtrl.unauthentication);
 
 module.exports = router;

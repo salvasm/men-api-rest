@@ -1,5 +1,5 @@
-import * as express from 'express';
-let router = express.Router();
+import { Router } from 'express';
+let router = Router();
 // Import Controller
 import UserController from '@components/user/user.controller';
 const UserCtrl = new UserController();

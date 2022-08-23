@@ -1,60 +1,56 @@
-import { Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import UserDto from './user.dto';
 import CRUD from '@services/crud.service';
-import HttpException from '@api/exceptions/HttpException';
-
+import { getPagination } from '@components/helpers'
+const crud = new CRUD('User');
 class UserController {
-    private crudService;
+    constructor() {}
 
-    constructor() {
-        this.crudService = new CRUD('User');
-    }
-
-    findAll = async (res: Response) => {
+    async findAll (req: Request, res: Response, next: NextFunction){
         try {
-            const result = await this.crudService.findAll();
+            const { limit, skipIndex } = getPagination(req.query);
+            var result = await crud.findAll(limit, skipIndex);
             return res.status(result.status).json(result);
         } catch (error: unknown) {
-            throw new HttpException(500, 'Internal Server Error');
+            next(error);
         }
     };
 
-    create = async (req: Request, res: Response) => {
+    async create (req: Request, res: Response, next: NextFunction){
         try {
             var user = new UserDto(req.body);
-            const result = await this.crudService.create(this.crudService.model(user));
-            console.log(result);
+            const result = await crud.create(crud.model(user));
             return res.status(result.status).json(result);
         } catch (error) {
-            throw new HttpException(500, 'Internal Server Error');
+            next(error);
         }
     };
 
-    read = async (req: Request, res: Response) => {
+    async read(req: Request, res: Response, next: NextFunction) {
         try {
-            const result = await this.crudService.findById(req.params.id);
+            const result = await crud.findById(req.params.id);
             return res.status(result.status).json(result);
         } catch (error) {
-            throw new HttpException(500, 'Internal Server Error');
+            next(error);
         }
     };
 
-    update = async (req: Request, res: Response) => {
+    async update(req: Request, res: Response, next: NextFunction) {
         try {
             var user = new UserDto(req.body);
-            const result = await this.crudService.update(req.params.id, user);
+            const result = await crud.update(req.params.id, user);
             return res.status(result.status).json(result);
         } catch (error) {
-            throw new HttpException(500, 'Internal Server Error');
+            next(error);
         }
     };
 
-    delete = async (req: Request, res: Response) => {
+    async delete(req: Request, res: Response, next: NextFunction) {
         try {
-            const result = await this.crudService.delete(req.params.id);
+            const result = await crud.delete(req.params.id);
             return res.status(result.status).json(result);
         } catch (error) {
-            throw new HttpException(500, 'Internal Server Error');
+            next(error);
         }
     };
 }
