@@ -54,6 +54,8 @@ There are a lot of ideas I want to apply to practice, learn or just for fun. Mos
 - sessions
 - ACL
 - Error Handling
+- Pagination
+- Documentation (swagger)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -93,6 +95,9 @@ npm run build && npm run start
 
 <!-- DEFAULT CONFIGURATIONS -->
 ## Default Configurations
+
+### Global configuration
+You should change ``global.ts`` on config folder with your own configuration for: server, db, jwt and others.
 
 <!-- ROLES -->
 ### Roles
