@@ -13,12 +13,12 @@
     "group": "user",
     "permissions": [
       {
-        "resource": "user/*",
+        "resource": "v1/user/*",
         "methods": ["GET"],
         "action": "allow"
       },
       {
-        "resource": "auth/logout",
+        "resource": "v1/auth/logout",
         "methods": ["POST"],
         "action": "allow"
       }
@@ -28,12 +28,12 @@
     "group": "guest",
     "permissions": [
       {
-        "resource": "user/*",
+        "resource": "v1/user/*",
         "methods": ["GET"],
         "action": "allow"
       },
       {
-        "resource": "auth/logout",
+        "resource": "v1/auth/logout",
         "methods": ["POST"],
         "action": "allow"
       }

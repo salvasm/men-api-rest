@@ -1,6 +1,7 @@
 const config = {
     api: {
         baseUrl: "/api",
+        version: 1
     },
     server: {
         port: 3000,

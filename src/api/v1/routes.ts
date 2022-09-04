@@ -1,7 +1,7 @@
 import fs from 'fs';
 import config from '@config/global';
 import { Router } from 'express';
-import HttpException from './exceptions/HttpException';
+import HttpException from '../exceptions/HttpException';
 const router = Router();
 
 // Root API path

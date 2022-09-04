@@ -17,10 +17,12 @@ import swaggerDocument from './docs/swagger.json';
 class App {
     public app: express.Application;
     public port: number;
+    public version: number;
     
-    constructor(port: number) {
+    constructor(port: number, version: number = 1) {
         this.app = express();
         this.port = port;
+        this.version = version;
         
         this.initSwagger();
         this.initMiddlewares();
@@ -40,8 +42,10 @@ class App {
     }
 
     private initControllers() {
-        const apiRoutes = require('./routes');
-        this.app.use(config.api.baseUrl, apiRoutes);
+        const versionUrl = '/v' + this.version;
+        const apiRoutes = require('.' + versionUrl + '/routes');
+        const routesUrl = config.api.baseUrl + versionUrl + '/';
+        this.app.use(routesUrl, apiRoutes);
         this.app.use(errorMiddleware);
     }
 
@@ -59,13 +63,12 @@ class App {
     }
 
     public listen() {
-        logger.info('INITIAL CONNECTIONS');
         try {
             this.app.listen(this.port, () => {
-                logger.info('Server:\tDONE \t Port: ' + this.port);
+                logger.info('API:\tDONE\t Port: ' + this.port + '\tVersion: ' + this.version);
             });
         } catch (error) {
-            logger.error('Server:\tFAIL\t Internal Server Error');
+            logger.error('API:\tFAIL\t Internal Server Error');
         }
     }
 }
