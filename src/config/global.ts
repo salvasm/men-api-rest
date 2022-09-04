@@ -1,6 +1,6 @@
 const config = {
     api: {
-        baseUrl: "/api"
+        baseUrl: "/api",
     },
     server: {
         port: 3000,
@@ -37,6 +37,11 @@ const config = {
     },
     swagger: {
         route: '/api/docs'
+    },
+    default: {
+        pagination: {
+            limit: 10
+        }
     }
 };
 

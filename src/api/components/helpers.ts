@@ -1,4 +1,5 @@
 import { apiResponse } from "@interfaces/global";
+import config from "@config/global"
 
 export function JSONresponse(success: boolean, status: number, data: { [key: string]: any; } | string): apiResponse {
     return {
@@ -15,7 +16,7 @@ function getPage(query: any) {
 }
 
 function getLimit(query: any) {
-    return query.limit ? parseInt(query.limit as string) : 0;
+    return query.limit ? parseInt(query.limit as string) : config.default.pagination.limit;
 }
 
 function getSkipIndex(page: number, limit: number) {
