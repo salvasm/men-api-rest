@@ -23,5 +23,20 @@
         "action": "allow"
       }
     ]
+  },
+  {
+    "group": "guest",
+    "permissions": [
+      {
+        "resource": "user/*",
+        "methods": ["GET"],
+        "action": "allow"
+      },
+      {
+        "resource": "auth/logout",
+        "methods": ["POST"],
+        "action": "allow"
+      }
+    ]
   }
 ]
